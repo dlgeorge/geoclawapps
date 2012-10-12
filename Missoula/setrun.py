@@ -107,7 +107,7 @@ def setrun(claw_pkg='geoclaw'):
     if clawdata.outstyle==1:
         # Output nout frames at equally spaced times up to tfinal:
         clawdata.nout = 100
-        clawdata.tfinal = 20.00
+        clawdata.tfinal = 200.00
 
     elif clawdata.outstyle == 2:
         # Specify a list of output times.
@@ -268,12 +268,12 @@ def setgeo(rundata):
 
     # == settsunami.data values ==
     geodata.sealevel = 0.0
-    geodata.drytolerance = 1.e-3
+    geodata.drytolerance = 1.e-4
     geodata.wavetolerance = 5.e-2
     geodata.depthdeep = 1.e2
     geodata.maxleveldeep = 1
     geodata.ifriction = 1
-    geodata.coeffmanning = 0.033
+    geodata.coeffmanning = 0.025
     geodata.frictiondepth = 10000.0
 
     # == settopo.data values ==

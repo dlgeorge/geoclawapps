@@ -15,8 +15,10 @@ place following topography files in ./topo/ directory:
 
 Step 2:
 
+from ./topo issue:
 >> python maketopo.py
 
 Step 3:
 
-make .output
+from ./ issue:
+>> make .output
