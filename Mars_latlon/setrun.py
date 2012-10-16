@@ -260,7 +260,7 @@ def setgeo(rundata):
     R1=6357.e3 #polar radius
     R2=6378.e3 #equatorial radius
     Rearth=.5*(R1+R2)
-    Rmars = 3.397e3
+    Rmars = 3397.0e3
     Rearth = Rmars
     geodata.igravity = 1
     geodata.gravity = 9.81*0.38
