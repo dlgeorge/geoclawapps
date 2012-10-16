@@ -38,17 +38,18 @@ CLAW_LIB =  $(CLAW)/amrclaw/2d/lib
 GEOLIB =    $(CLAW)/geoclaw/2d/lib
 
 CLAW_LIBSOURCES = \
+  ./source_mod.f90 \
   $(GEOLIB)/geoclaw_mod.f90 \
   $(GEOLIB)/topo_mod.f90 \
   $(GEOLIB)/dtopo_mod.f90 \
   $(GEOLIB)/qinit_mod.f90 \
   $(GEOLIB)/auxinit_mod.f90 \
-  $(GEOLIB)/setaux_geo.f \
+  ./src2_geo.f \
   ./qinit_geo.f \
+  $(GEOLIB)/setaux_geo.f \
   $(GEOLIB)/rpn2ez_geo.f \
   $(GEOLIB)/riemannsolvers_geo.f \
   $(GEOLIB)/rpt2_geo.f \
-  ./src2_geo.f \
   $(GEOLIB)/setprob_geo.f \
   $(GEOLIB)/b4step2_geo.f \
   $(GEOLIB)/src1d_geo.f \

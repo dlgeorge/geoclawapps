@@ -8,8 +8,8 @@ import pylab
 import os
 
 def maketopo():
-    infile = 'mars_500m_XYZ.dat' #topo file
-    outfile = 'Mars_500m_topo.tt2'
+    infile = 'athabasca_lon_lat_z_approx.asc'
+    outfile = 'Mars_latlon_topo.tt2'
     converttopo(infile,outfile)
 
 
@@ -26,7 +26,7 @@ def converttopo(infile,outfile):
         print ' output format contains a header and single column of data'
 
 
-        a = np.loadtxt(infile,skiprows=9)
+        a = np.loadtxt(infile)#,skiprows=9)
 
         xdiff=np.diff(a[:,0])
         inddiff=pylab.find(xdiff<0)
@@ -34,14 +34,14 @@ def converttopo(infile,outfile):
         ylength=len(a[:,0])/xlength
         x=a[:,0]
         y=a[:,1]
-        z=a[:,2] + 3500.0 # + 4680.1
+        z=a[:,2]
 
         X=np.reshape(x,(ylength,xlength))
         Y=np.reshape(y,(ylength,xlength))
         Z=np.reshape(z,(ylength,xlength))
 
-        #Y=np.flipud(Y)
-        #Z=np.flipud(Z)
+        Y=np.flipud(Y)
+        Z=np.flipud(Z)
 
         gt.griddata2topofile(X,Y,Z,outfile)
         print ' file conversion complete\n'

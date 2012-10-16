@@ -57,14 +57,14 @@ def setrun(claw_pkg='geoclaw'):
     clawdata.ndim = ndim
 
     # Lower and upper edge of computational domain:
+    cellsize = 0.0078125
+    clawdata.xlower =  145.5
+    ncols = 1900 - np.mod(1900,16) + 1
+    clawdata.xupper =  clawdata.xlower + (ncols-1)*cellsize
 
-    clawdata.xlower =  500.0
-    ncols = 1201
-    clawdata.xupper =  clawdata.xlower + (ncols-1)*1500.0
-
-    clawdata.ylower =  -613000.0
-    nrows = 614 -21
-    clawdata.yupper =  clawdata.ylower + (nrows-1)*1500.0
+    clawdata.ylower =  1.06
+    nrows = 1300-np.mod(1300,16) + 1
+    clawdata.yupper =  clawdata.ylower + (nrows-1)*cellsize
 
 
     # Number of grid cells:
@@ -83,7 +83,7 @@ def setrun(claw_pkg='geoclaw'):
     clawdata.maux = 3
 
     # Index of aux array corresponding to capacity function, if there is one:
-    clawdata.mcapa = 0
+    clawdata.mcapa = 2
 
 
 
@@ -107,7 +107,7 @@ def setrun(claw_pkg='geoclaw'):
     if clawdata.outstyle==1:
         # Output nout frames at equally spaced times up to tfinal:
         clawdata.nout = 100
-        clawdata.tfinal = 2000.00
+        clawdata.tfinal = 2.00
 
     elif clawdata.outstyle == 2:
         # Specify a list of output times.
@@ -224,7 +224,7 @@ def setrun(claw_pkg='geoclaw'):
     # This must be a list of length maux, each element of which is one of:
     #   'center',  'capacity', 'xleft', or 'yleft'  (see documentation).
 
-    clawdata.auxtype = ['center','center','yleft']
+    clawdata.auxtype = ['center','capacity','yleft']
 
 
     clawdata.tol = -1.0     # negative ==> don't use Richardson estimator
@@ -260,14 +260,16 @@ def setgeo(rundata):
     R1=6357.e3 #polar radius
     R2=6378.e3 #equatorial radius
     Rearth=.5*(R1+R2)
+    Rmars = 3.397e3
+    Rearth = Rmars
     geodata.igravity = 1
-    geodata.gravity = 9.81
-    geodata.icoordsys = 1 #set to 2 for use with lat-lon coordinates on the sphere
+    geodata.gravity = 9.81*0.38
+    geodata.icoordsys = 2 #set to 2 for use with lat-lon coordinates on the sphere
     geodata.icoriolis = 0
     geodata.Rearth = Rearth
 
     # == settsunami.data values ==
-    geodata.sealevel = 0.0
+    geodata.sealevel = -3600.0
     geodata.drytolerance = 1.e-6
     geodata.wavetolerance = 5.e-2
     geodata.depthdeep = 1.e2
@@ -290,7 +292,7 @@ def setgeo(rundata):
     geodata.topofiles = []
     import os
     topo='topo'
-    topofile1 = os.path.join(topo,'Mars_500m_topo.tt2')
+    topofile1 = os.path.join(topo,'Mars_latlon_topo.tt2')
 
     geodata.topofiles.append([2, 1, 3, 0.0, 1.e10, topofile1])
 
@@ -320,9 +322,15 @@ def setgeo(rundata):
 
     # == setregions.data values ==
     geodata.regions = []
+    x1=155.0
+    x2=160.0
+    y1=9.0
+    y2 =11.0
+    mx = 1200
+    my = 1000
     # to specify regions of refinement append lines of the form
     #  [minlevel,maxlevel,t1,t2,x1,x2,y1,y2]
-    geodata.regions.append([2,3,0.0,1.e10,1.25e6,1.5e6,1.4e5,2.3e5])
+    geodata.regions.append([2,3,0.0,1.e10,x1,x2,y1,y2])
 
     # == setgauges.data values ==
     geodata.gauges = []
@@ -335,32 +343,32 @@ def setgeo(rundata):
     # Note: this is only for viewing output in non-AMR formats. This doesn't not affect the actual computation.
     # [t1,t2,noutput,x1,x2,y1,y2,xpoints,ypoints,\
     #  ioutarrivaltimes,ioutsurfacemax]
-    xlower =  500.0
-    ncols = 1201
-    xupper =  xlower + (ncols-1)*1500.0
-    dx = 1500.0
 
-    ylower =  -613000.0
-    nrows = 614-21
-    yupper =  ylower + (nrows-1)*1500.0
-    dy = dx
+    #fixed grid for plotting entire domain at course resolution
+    cellsize = 0.0078125
+    xlower =  145.5
+    ncols = 1900 - np.mod(1900,16) + 1
+    xupper =  xlower + (ncols-1)*cellsize
 
-    x1 = xlower + 0.5*dx
-    x2 = xupper - 0.5*dx
-    y1 = ylower + 0.5*dy
-    y2 = yupper - 0.5*dy
+    ylower =  1.06
+    nrows = 1300-np.mod(1300,16) + 1
+    yupper =  ylower + (nrows-1)*cellsize
+
+    x1 = xlower + 0.5*cellsize
+    x2 = xupper - 0.5*cellsize
+    y1 = ylower + 0.5*cellsize
+    y2 = yupper - 0.5*cellsize
     mx = ncols - 1
     my = nrows - 1
-    # entire domain at course resolution
     #geodata.fixedgrids.append([0.0,1.e10,100,x1,x2,y1,y2,mx,my,0,0])
 
-    x1=1.25e6
-    x2=1.5e6
-    y1=1.4e5
-    y2 =2.3e5
+    # fixed grid for plotting near source region at finer resolution.
+    x1=155.0
+    x2=160.0
+    y1=9.0
+    y2 =11.0
     mx = 1200
     my = 1000
-    # near source region at finer resolution.
     #geodata.fixedgrids.append([0.0,1.e10,100,x1,x2,y1,y2,mx,my,0,0])
 
 

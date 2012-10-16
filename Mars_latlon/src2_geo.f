@@ -5,13 +5,12 @@ c =========================================================
      &             q,maux,aux,t,dt)
 c =========================================================
       use geoclaw_module
+      use source_module
 
       implicit double precision (a-h,o-z)
 
       dimension   q(1-mbc:maxmx+mbc,1-mbc:maxmy+mbc, meqn)
       dimension aux(1-mbc:maxmx+mbc,1-mbc:maxmy+mbc, maux)
-
-      double precision source(2,10)
 c
 
 c     # incorporates friction using Manning coefficient
@@ -77,23 +76,17 @@ c                 # apply friction source term only in shallower water
       endif
 *     ! ----------------------------------------------------------------
 
-      open(unit=77,file='../topo/mars_source_xy.dat',status='unknown')
-      read(77,*) js
-      do j=1,js
-         read(77,*) source(1,j), source(2,j)
-      enddo
-      close(77)
 
       do i=1-mbc,mx+mbc
          x = xlower + (i-0.5d0)*dx
          do j=1-mbc,my+mbc
              y = ylower + (j-0.5d0)*dy
-             do k = 1,js
+             do k = 1,isources
                if ((source(1,k).gt.x-0.5d0*dx).and.
      &             (source(1,k).le.x+0.5d0*dx).and.
      &             (source(2,k).gt.y-0.5d0*dy).and.
      &             (source(2,k).le.y+0.5d0*dy)) then
-                  q(i,j,1) = q(i,j,1) + dt*25000.0/(dx*dy)
+                  q(i,j,1) = q(i,j,1) + dt*5.0/(dx*dy)
                endif
              enddo
          enddo
