@@ -60,11 +60,11 @@ def setrun(claw_pkg='geoclaw'):
 
     clawdata.xlower =  500.0
     ncols = 1201
-    clawdata.xupper =  clawdata.xlower + (ncols-1)*250.0
+    clawdata.xupper =  clawdata.xlower + (ncols-1)*1500.0
 
     clawdata.ylower =  -613000.0
     nrows = 614 -21
-    clawdata.yupper =  clawdata.ylower + (nrows-1)*250.0
+    clawdata.yupper =  clawdata.ylower + (nrows-1)*1500.0
 
 
     # Number of grid cells:
@@ -130,7 +130,7 @@ def setrun(claw_pkg='geoclaw'):
     # The current t, dt, and cfl will be printed every time step
     # at AMR levels <= verbosity.  Set verbosity = 0 for no printing.
     #   (E.g. verbosity == 2 means print only on levels 1 and 2.)
-    clawdata.verbosity = 0
+    clawdata.verbosity = 2
 
 
 
@@ -210,7 +210,7 @@ def setrun(claw_pkg='geoclaw'):
 
 
     # max number of refinement levels:
-    mxnest = 2
+    mxnest = 1
 
     clawdata.mxnest = -mxnest   # negative ==> anisotropic refinement in x,y,t
 
@@ -322,7 +322,7 @@ def setgeo(rundata):
     geodata.regions = []
     # to specify regions of refinement append lines of the form
     #  [minlevel,maxlevel,t1,t2,x1,x2,y1,y2]
-    geodata.regions.append([2,3,0.0,1.e10,-2750.0,-2650.0,1296400.0,1346100.0])
+    geodata.regions.append([2,3,0.0,1.e10,1.25e6,1.5e6,1.4e5,2.3e5])
 
     # == setgauges.data values ==
     geodata.gauges = []
@@ -337,12 +337,12 @@ def setgeo(rundata):
     #  ioutarrivaltimes,ioutsurfacemax]
     xlower =  500.0
     ncols = 1201
-    xupper =  xlower + (ncols-1)*500.0
-    dx = 500.0
+    xupper =  xlower + (ncols-1)*1500.0
+    dx = 1500.0
 
     ylower =  -613000.0
     nrows = 614-21
-    yupper =  ylower + (nrows-1)*500.0
+    yupper =  ylower + (nrows-1)*1500.0
     dy = dx
 
     x1 = xlower + 0.5*dx

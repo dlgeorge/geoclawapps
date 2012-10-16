@@ -22,7 +22,7 @@ c      # been strored in qinitwork.
       open(unit=77,file='../topo/mars_source_xy.dat',status='unknown')
       read(77,*) js
       do j=1,js
-         read(77,*) source(2,j), source(1,j)
+         read(77,*) source(1,j), source(2,j)
       enddo
       close(77)
 
@@ -36,6 +36,7 @@ c      # been strored in qinitwork.
      &             (source(1,k).le.x+0.5d0*dx).and.
      &             (source(2,k).gt.y-0.5d0*dy).and.
      &             (source(2,k).le.y+0.5d0*dy)) then
+                  write(*,*) 'qinit'
                   q(i,j,1) = 100.d0
                endif
              enddo
