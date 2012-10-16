@@ -360,7 +360,7 @@ def setgeo(rundata):
     y2 = yupper - 0.5*cellsize
     mx = ncols - 1
     my = nrows - 1
-    #geodata.fixedgrids.append([0.0,1.e10,100,x1,x2,y1,y2,mx,my,0,0])
+    geodata.fixedgrids.append([0.0,1.e10,100,x1,x2,y1,y2,mx,my,0,0])
 
     # fixed grid for plotting near source region at finer resolution.
     x1=155.0
@@ -369,7 +369,7 @@ def setgeo(rundata):
     y2 =11.0
     mx = 1200
     my = 1000
-    #geodata.fixedgrids.append([0.0,1.e10,100,x1,x2,y1,y2,mx,my,0,0])
+    geodata.fixedgrids.append([0.0,1.e10,100,x1,x2,y1,y2,mx,my,0,0])
 
 
     # == setflowgrades.data values ==
