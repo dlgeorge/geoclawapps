@@ -14,5 +14,9 @@ from ./topo issue cmd:
 
 Step 3:
 
+from ./ issue cmd: (this step is normally not necessary...however we are using modules from the library and two locally modified routines...so make twice).
+>> make new
+
+Step 4:
 from ./ issue cmd:
 >> make .output

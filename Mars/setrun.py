@@ -58,12 +58,12 @@ def setrun(claw_pkg='geoclaw'):
 
     # Lower and upper edge of computational domain:
 
-    clawdata.xlower =  1800.199951
-    ncols = 3470 - 13
+    clawdata.xlower =  500.0
+    ncols = 1201
     clawdata.xupper =  clawdata.xlower + (ncols-1)*250.0
 
-    clawdata.ylower =  1800.199951+10.*250.
-    nrows = 1547 - 10
+    clawdata.ylower =  -613000.0
+    nrows = 614 -21
     clawdata.yupper =  clawdata.ylower + (nrows-1)*250.0
 
 
@@ -290,7 +290,7 @@ def setgeo(rundata):
     geodata.topofiles = []
     import os
     topo='topo'
-    topofile1 = os.path.join(topo,'Missoula_250m_topo.tt2')
+    topofile1 = os.path.join(topo,'Mars_500m_topo.tt2')
 
     geodata.topofiles.append([2, 1, 3, 0.0, 1.e10, topofile1])
 
@@ -311,9 +311,9 @@ def setgeo(rundata):
     #The following values are allowed for iqinit:
         #n=1,mq perturbation of q(i,j,n)
         #n=mq+1: surface elevation eta is defined by the file and results in h=max(eta-b,0)
-    qinitfileeta = os.path.join(topo,'Missoula_250m_watersurface.tt2')
-    qinitfiledepth = os.path.join(topo,'Missoula_250m_waterdepth.tt2')
-    geodata.qinitfiles.append([2,1,1,3,qinitfiledepth])
+
+    qinitfiledepth = os.path.join(topo,'Mars_500m_waterdepth.tt2')
+    #geodata.qinitfiles.append([2,1,1,3,qinitfiledepth])
 
     # == setauxinit.data values ==
     geodata.auxinitfiles = []
@@ -322,7 +322,7 @@ def setgeo(rundata):
     geodata.regions = []
     # to specify regions of refinement append lines of the form
     #  [minlevel,maxlevel,t1,t2,x1,x2,y1,y2]
-    #geodata.regions.append([])
+    geodata.regions.append([2,3,0.0,1.e10,-2750.0,-2650.0,1296400.0,1346100.0])
 
     # == setgauges.data values ==
     geodata.gauges = []
@@ -335,14 +335,14 @@ def setgeo(rundata):
     # Note: this is only for viewing output in non-AMR formats. This doesn't not affect the actual computation.
     # [t1,t2,noutput,x1,x2,y1,y2,xpoints,ypoints,\
     #  ioutarrivaltimes,ioutsurfacemax]
-    xlower =  1800.199951
-    ncols = 3470 - 13
-    xupper =  xlower + (ncols-1)*250.0
-    dx = 250.0
+    xlower =  500.0
+    ncols = 1201
+    xupper =  xlower + (ncols-1)*500.0
+    dx = 500.0
 
-    ylower =  1800.199951 + 10.0*250.0
-    nrows = 1547 - 10
-    yupper =  ylower + (nrows-1)*250.0
+    ylower =  -613000.0
+    nrows = 614-21
+    yupper =  ylower + (nrows-1)*500.0
     dy = dx
 
     x1 = xlower + 0.5*dx

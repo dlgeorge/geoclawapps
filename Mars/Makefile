@@ -44,11 +44,11 @@ CLAW_LIBSOURCES = \
   $(GEOLIB)/qinit_mod.f90 \
   $(GEOLIB)/auxinit_mod.f90 \
   $(GEOLIB)/setaux_geo.f \
-  $(GEOLIB)/qinit_geo.f \
+  ./qinit_geo.f \
   $(GEOLIB)/rpn2ez_geo.f \
   $(GEOLIB)/riemannsolvers_geo.f \
   $(GEOLIB)/rpt2_geo.f \
-  $(GEOLIB)/src2_geo.f \
+  ./src2_geo.f \
   $(GEOLIB)/setprob_geo.f \
   $(GEOLIB)/b4step2_geo.f \
   $(GEOLIB)/src1d_geo.f \

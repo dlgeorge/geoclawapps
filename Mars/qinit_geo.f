@@ -17,12 +17,29 @@ c      # been strored in qinitwork.
       dimension q(1-mbc:maxmx+mbc, 1-mbc:maxmy+mbc, meqn)
       dimension aux(1-mbc:maxmx+mbc,1-mbc:maxmy+mbc,maux)
 
+      double precision source(2,10)
+
+      open(unit=77,file='../topo/mars_source_xy.dat',status='unknown')
+      read(77,*) js
+      do j=1,js
+         read(77,*) source(2,j), source(1,j)
+      enddo
+      close(77)
 
       do i=1-mbc,mx+mbc
          x = xlower + (i-0.5d0)*dx
          do j=1-mbc,my+mbc
              y = ylower + (j-0.5d0)*dy
-             q(i,j,1) = dmax1(0.d0,sealevel-aux(i,j,1))
+             q(i,j,1) = 0.d0
+             do k = 1,js
+               if ((source(1,k).gt.x-0.5d0*dx).and.
+     &             (source(1,k).le.x+0.5d0*dx).and.
+     &             (source(2,k).gt.y-0.5d0*dy).and.
+     &             (source(2,k).le.y+0.5d0*dy)) then
+                  q(i,j,1) = 100.d0
+               endif
+             enddo
+
              do m=2,meqn
                q(i,j,m)=0.d0
              enddo

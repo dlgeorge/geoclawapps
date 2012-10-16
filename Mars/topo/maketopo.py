@@ -8,18 +8,9 @@ import pylab
 import os
 
 def maketopo():
-    infile = 'Missoula_250m_IC_XYZ.dat' #topo file
-    outfile = 'Missoula_250m_topo.tt2'
+    infile = 'mars_500m_XYZ.dat' #topo file
+    outfile = 'Mars_500m_topo.tt2'
     converttopo(infile,outfile)
-
-    infile = 'Missoula_250m_IC_XYN.dat' #topo file
-    outfile = 'Missoula_250m_watersurface.tt2'
-    converttopo(infile,outfile)
-
-    infile = 'Missoula_250m_IC_XYH.dat' #topo file
-    outfile = 'Missoula_250m_waterdepth.tt2'
-    converttopo(infile,outfile)
-
 
 
 def converttopo(infile,outfile):
@@ -43,14 +34,14 @@ def converttopo(infile,outfile):
         ylength=len(a[:,0])/xlength
         x=a[:,0]
         y=a[:,1]
-        z=a[:,2]
+        z=a[:,2] + 4680.1
 
         X=np.reshape(x,(ylength,xlength))
         Y=np.reshape(y,(ylength,xlength))
         Z=np.reshape(z,(ylength,xlength))
 
-        Y=np.flipud(Y)
-        Z=np.flipud(Z)
+        #Y=np.flipud(Y)
+        #Z=np.flipud(Z)
 
         gt.griddata2topofile(X,Y,Z,outfile)
         print ' file conversion complete\n'
