@@ -37,7 +37,7 @@ c      # been strored in qinitwork.
      &             (source(1,k).le.x+0.5d0*dx).and.
      &             (source(2,k).gt.y-0.5d0*dy).and.
      &             (source(2,k).le.y+0.5d0*dy)) then
-                  q(i,j,1) = q(i,j,1) + 100.d0
+                  q(i,j,1) = q(i,j,1) + 3000.d0
                endif
              enddo
 

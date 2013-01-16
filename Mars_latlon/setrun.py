@@ -59,17 +59,17 @@ def setrun(claw_pkg='geoclaw'):
     # Lower and upper edge of computational domain:
     cellsize = 0.0078125
     clawdata.xlower =  145.5
-    ncols = 1900 - np.mod(1900,16) + 1
+    ncols = 1900 - np.mod(1900,32) + 1
     clawdata.xupper =  clawdata.xlower + (ncols-1)*cellsize
 
     clawdata.ylower =  1.06
-    nrows = 1300-np.mod(1300,16) + 1
+    nrows = 1300-np.mod(1300,32) + 1
     clawdata.yupper =  clawdata.ylower + (nrows-1)*cellsize
 
 
     # Number of grid cells:
-    clawdata.mx = (ncols-1)/16
-    clawdata.my = (nrows-1)/16
+    clawdata.mx = (ncols-1)/32
+    clawdata.my = (nrows-1)/32
 
 
     # ---------------
@@ -107,7 +107,7 @@ def setrun(claw_pkg='geoclaw'):
     if clawdata.outstyle==1:
         # Output nout frames at equally spaced times up to tfinal:
         clawdata.nout = 100
-        clawdata.tfinal = 2.00
+        clawdata.tfinal = 36000.0
 
     elif clawdata.outstyle == 2:
         # Specify a list of output times.
@@ -130,7 +130,7 @@ def setrun(claw_pkg='geoclaw'):
     # The current t, dt, and cfl will be printed every time step
     # at AMR levels <= verbosity.  Set verbosity = 0 for no printing.
     #   (E.g. verbosity == 2 means print only on levels 1 and 2.)
-    clawdata.verbosity = 2
+    clawdata.verbosity = 0
 
 
 
@@ -152,7 +152,7 @@ def setrun(claw_pkg='geoclaw'):
     # Desired Courant number if variable dt used, and max to allow without
     # retaking step with a smaller dt:
     clawdata.cfl_desired = 0.25
-    clawdata.cfl_max = 0.99
+    clawdata.cfl_max = 0.75
 
     # Maximum number of time steps to allow between output times:
     clawdata.max_steps = 100000
@@ -210,14 +210,14 @@ def setrun(claw_pkg='geoclaw'):
 
 
     # max number of refinement levels:
-    mxnest = 2
+    mxnest = 3
 
     clawdata.mxnest = -mxnest   # negative ==> anisotropic refinement in x,y,t
 
     # List of refinement ratios at each level (length at least mxnest-1)
-    clawdata.inratx = [16,16]
-    clawdata.inraty = [16,16]
-    clawdata.inratt = [16,16]
+    clawdata.inratx = [8,16]
+    clawdata.inraty = [8,16]
+    clawdata.inratt = [8,16]
 
 
     # Specify type of each aux variable in clawdata.auxtype.
@@ -270,12 +270,12 @@ def setgeo(rundata):
 
     # == settsunami.data values ==
     geodata.sealevel = -3600.0
-    geodata.drytolerance = 1.e-6
+    geodata.drytolerance = 1.e-3
     geodata.wavetolerance = 5.e-2
     geodata.depthdeep = 1.e2
     geodata.maxleveldeep = 1
     geodata.ifriction = 1
-    geodata.coeffmanning = 0.025
+    geodata.coeffmanning = 0.033
     geodata.frictiondepth = 10000.0
 
     # == settopo.data values ==
@@ -360,7 +360,7 @@ def setgeo(rundata):
     y2 = yupper - 0.5*cellsize
     mx = ncols - 1
     my = nrows - 1
-    geodata.fixedgrids.append([0.0,1.e10,100,x1,x2,y1,y2,mx,my,0,0])
+    #geodata.fixedgrids.append([0.0,1.e10,100,x1,x2,y1,y2,mx,my,0,0])
 
     # fixed grid for plotting near source region at finer resolution.
     x1=155.0
@@ -369,7 +369,7 @@ def setgeo(rundata):
     y2 =11.0
     mx = 1200
     my = 1000
-    geodata.fixedgrids.append([0.0,1.e10,100,x1,x2,y1,y2,mx,my,0,0])
+    #geodata.fixedgrids.append([0.0,1.e10,100,x1,x2,y1,y2,mx,my,0,0])
 
 
     # == setflowgrades.data values ==
@@ -382,7 +382,7 @@ def setgeo(rundata):
     #flowgradevariable: 1=depth, 2= momentum, 3 = sign(depth)*(depth+topo) (0 at sealevel or dry land).
     #flowgradetype: 1 = norm(flowgradevariable), 2 = norm(grad(flowgradevariable))
     #flowgrademinlevel: refine to at least this level if flowgradevalue is exceeded.
-    geodata.flowgrades.append([1.e0,  2, 1, 3])
+    geodata.flowgrades.append([1.e-2,  2, 1, 3])
     geodata.flowgrades.append([1.e-8, 1, 1, 2])
 
     return rundata

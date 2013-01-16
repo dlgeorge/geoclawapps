@@ -86,7 +86,7 @@ c                 # apply friction source term only in shallower water
      &             (source(1,k).le.x+0.5d0*dx).and.
      &             (source(2,k).gt.y-0.5d0*dy).and.
      &             (source(2,k).le.y+0.5d0*dy)) then
-                  q(i,j,1) = q(i,j,1) + dt*5.0/(dx*dy)
+                  q(i,j,1) = q(i,j,1) + dt*1.e6/(dx*dy*aux(i,j,2))
                endif
              enddo
          enddo
